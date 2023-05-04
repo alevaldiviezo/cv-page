@@ -1,24 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import 'tachyons';
+
+import Nav from './components/Nav';
+import Footer from './components/Footer';
+import Content from './components/Content';
+import Home from './components/Home';
+import {parts} from './db/parts';
+import Header from './components/Header';
+
+import Experience from './pages/experience';
+import Education from './pages/education';
+import Contact from './pages/conatct';
 
 function App() {
+  const [route, setRoute] = useState('home')
+
+  const onRouteChange = (route) => {
+    setRoute(route);
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Nav onRouteChange={onRouteChange}/>
+      <Header/>
+      <div className='ma5'>
+        
+        {
+          route==='home'? <Content parts={parts} onRouteChange={onRouteChange}/> : ( route==='experience'? <Experience/> : (route==='education'? <Education/> : (route==='contact'? <Contact/> : <p>Not Found</p>)))
+        }
+      </div>
+      <Footer/>
+      {/* <Nav/>
+      <Content/>
+      <Footer/> */}
     </div>
+    
   );
 }
 
